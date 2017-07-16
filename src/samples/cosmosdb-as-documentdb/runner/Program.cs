@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using feeder.datastore;
 using feeder.filereader;
 using feeder.runner.Properties;
 using log4net;
@@ -20,6 +21,7 @@ namespace feeder.runner
             _log.Debug("Session started.");
 
             string[] files;
+            #region find files
             if (args.Length == 0)
             {
                 var dataFolder = Settings.Default.DataFolder;
@@ -33,12 +35,14 @@ namespace feeder.runner
             }
             else
             {
-                files = new[] {args[0]};
-            }
+                files = new[] { args[0] };
+            } 
+            #endregion
 
             _log.DebugFormat("Found {0} CSV files", files.Length);
             _log.Info("Processing...");
 
+            var store = new DataStorage(Settings.Default.EndpointUrl, Settings.Default.PrimaryKey, Settings.Default.DatabaseName, Settings.Default.CollectionName);
             foreach (var file in files)
             {
                 _log.DebugFormat("Reading file {0}", file);
@@ -48,11 +52,11 @@ namespace feeder.runner
                     reader.Open();
                     foreach (var json in reader.ReadJsonToEnd())
                     {
-                        // send json to cosmos
+                        store.Put(json).Wait();
                     }
                 }
             }
-
+            
             _log.Info("All files are processed.");
             _log.Debug("Session finished.");
         }

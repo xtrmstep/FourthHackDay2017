@@ -2,8 +2,20 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="feeder.runner.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="DataFolder" Type="System.String" Scope="Application">
+    <Setting Name="DataFolder" Type="System.String" Scope="User">
       <Value Profile="(Default)">/Data</Value>
+    </Setting>
+    <Setting Name="CollectionName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Sample</Value>
+    </Setting>
+    <Setting Name="DatabaseName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Sales</Value>
+    </Setting>
+    <Setting Name="EndpointUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://hackday2017.documents.azure.com:443/</Value>
+    </Setting>
+    <Setting Name="PrimaryKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">iCLaLMFVNpXN8ZJ2M6U4Rhv6ie0tAgjkREcAwhepXI6jTNbu1RBSCSs988YO9IgdJAkJrBdy9qIsnvujqXwZbA==</Value>
     </Setting>
   </Settings>
 </SettingsFile>

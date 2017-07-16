@@ -64,6 +64,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\datastore\datastore.csproj">
+      <Project>{6a6b67a9-f304-420d-a696-bddeeb6f6f03}</Project>
+      <Name>datastore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\filereader\filereader.csproj">
       <Project>{8061f23f-be96-4172-a656-0369a48da052}</Project>
       <Name>filereader</Name>
