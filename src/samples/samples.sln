@@ -3,15 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "datastore", "samples\cosmosdb-as-documentdb\datastore\datastore.csproj", "{6A6B67A9-F304-420D-A696-BDDEEB6F6F03}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "writing-to-cosmosdb", "writing-to-cosmosdb", "{DA935485-3EBB-4D67-9238-78A54A243B46}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{A1466228-AD7E-4CED-A4A3-7D7DF0FCBB39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "datastore", "writing-to-cosmosdb\datastore\datastore.csproj", "{6A6B67A9-F304-420D-A696-BDDEEB6F6F03}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "write-to-cosmosdb", "write-to-cosmosdb", "{64553601-EAB8-4F87-A14C-3512B72AAD19}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "filereader", "writing-to-cosmosdb\filereader\filereader.csproj", "{8061F23F-BE96-4172-A656-0369A48DA052}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "filereader", "samples\cosmosdb-as-documentdb\filereader\filereader.csproj", "{8061F23F-BE96-4172-A656-0369A48DA052}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "runner", "samples\cosmosdb-as-documentdb\runner\runner.csproj", "{9D2DF46F-FBA6-4C85-921B-A3E5D7E9A059}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "runner", "writing-to-cosmosdb\runner\runner.csproj", "{9D2DF46F-FBA6-4C85-921B-A3E5D7E9A059}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,9 +34,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{6A6B67A9-F304-420D-A696-BDDEEB6F6F03} = {64553601-EAB8-4F87-A14C-3512B72AAD19}
-		{64553601-EAB8-4F87-A14C-3512B72AAD19} = {A1466228-AD7E-4CED-A4A3-7D7DF0FCBB39}
-		{8061F23F-BE96-4172-A656-0369A48DA052} = {64553601-EAB8-4F87-A14C-3512B72AAD19}
-		{9D2DF46F-FBA6-4C85-921B-A3E5D7E9A059} = {64553601-EAB8-4F87-A14C-3512B72AAD19}
+		{6A6B67A9-F304-420D-A696-BDDEEB6F6F03} = {DA935485-3EBB-4D67-9238-78A54A243B46}
+		{8061F23F-BE96-4172-A656-0369A48DA052} = {DA935485-3EBB-4D67-9238-78A54A243B46}
+		{9D2DF46F-FBA6-4C85-921B-A3E5D7E9A059} = {DA935485-3EBB-4D67-9238-78A54A243B46}
 	EndGlobalSection
 EndGlobal
