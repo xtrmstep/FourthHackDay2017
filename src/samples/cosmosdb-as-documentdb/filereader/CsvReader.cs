@@ -65,13 +65,13 @@ namespace feeder.filereader
             if (_fileStream == null)
                 throw new InvalidOperationException("Cannot read from the closed stream.");
 
-            string line;
-            do
+            var line = _fileStream.ReadLine();
+            while (line != null)
             {
-                line = _fileStream.ReadLine();
                 var json = CreateJson(line);
                 yield return json;
-            } while (line != null);
+                line = _fileStream.ReadLine();
+            }
         }
 
         public void Dispose()

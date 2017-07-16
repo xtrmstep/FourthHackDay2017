@@ -5,10 +5,12 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using feeder.datastore;
 using feeder.filereader;
 using feeder.runner.Properties;
 using log4net;
+using log4net.Config;
 
 namespace feeder.runner
 {
@@ -18,6 +20,8 @@ namespace feeder.runner
 
         static void Main(string[] args)
         {
+            XmlConfigurator.Configure();
+
             _log.Debug("Session started.");
 
             string[] files;
@@ -26,7 +30,7 @@ namespace feeder.runner
             {
                 var dataFolder = Settings.Default.DataFolder;
                 var runningFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-                var dataFilesFolder = Path.Combine(runningFolder, dataFolder);
+                var dataFilesFolder = runningFolder + dataFolder;
                 var csvFiles = Directory.EnumerateFiles(dataFilesFolder, "*.csv");
                 files = csvFiles as string[] ?? csvFiles.ToArray();
 

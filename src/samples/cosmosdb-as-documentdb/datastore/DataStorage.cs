@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using log4net;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
+using Newtonsoft.Json;
 
 namespace feeder.datastore
 {
@@ -32,8 +33,9 @@ namespace feeder.datastore
                 var collectionName = _collectionName;
                 try
                 {
+                    var document = JsonConvert.DeserializeObject(data);
                     var collectionUri = UriFactory.CreateDocumentCollectionUri(databaseName, collectionName);
-                    await client.CreateDocumentAsync(collectionUri, data);
+                    await client.CreateDocumentAsync(collectionUri, document);
                 }
                 catch (DocumentClientException e)
                 {
