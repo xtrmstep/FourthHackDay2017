@@ -22,5 +22,32 @@ namespace reader.console.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("jz9KANIuYSlJsVb2Q+44bLnP4oeULl5D/brVb6Xbgf6YmbT9egEIZzmnqy0IYmsR3sp7MUIsnAFhIO/P4" +
+            "MsAvQ==")]
+        public string Key {
+            get {
+                return ((string)(this["Key"]));
+            }
+            set {
+                this["Key"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://ussouthcentral.services.azureml.net/workspaces/d17f979b70964d47bd15bfbae9" +
+            "4c5a66/services/b0b8aaaa51ef4078988538a8a0effe23/execute?api-version=2.0&details" +
+            "=true&format=swagger")]
+        public string Uri {
+            get {
+                return ((string)(this["Uri"]));
+            }
+            set {
+                this["Uri"] = value;
+            }
+        }
     }
 }

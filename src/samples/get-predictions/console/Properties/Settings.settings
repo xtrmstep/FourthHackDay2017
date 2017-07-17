@@ -1,6 +1,12 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="reader.console.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Key" Type="System.String" Scope="User">
+      <Value Profile="(Default)">jz9KANIuYSlJsVb2Q+44bLnP4oeULl5D/brVb6Xbgf6YmbT9egEIZzmnqy0IYmsR3sp7MUIsnAFhIO/P4MsAvQ==</Value>
+    </Setting>
+    <Setting Name="Uri" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://ussouthcentral.services.azureml.net/workspaces/d17f979b70964d47bd15bfbae94c5a66/services/b0b8aaaa51ef4078988538a8a0effe23/execute?api-version=2.0&amp;details=true&amp;format=swagger</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>
