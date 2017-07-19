@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "filereader", "writing-to-co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "runner", "writing-to-cosmosdb\runner\runner.csproj", "{9D2DF46F-FBA6-4C85-921B-A3E5D7E9A059}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "get-predictions", "get-predictions", "{80AEB879-99F2-4CD6-9BA7-17A3D782EC97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "console", "get-predictions\console\console.csproj", "{8F577C04-3A20-4C1A-BADE-46A5AB769BC5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +33,10 @@ Global
 		{9D2DF46F-FBA6-4C85-921B-A3E5D7E9A059}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D2DF46F-FBA6-4C85-921B-A3E5D7E9A059}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D2DF46F-FBA6-4C85-921B-A3E5D7E9A059}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F577C04-3A20-4C1A-BADE-46A5AB769BC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F577C04-3A20-4C1A-BADE-46A5AB769BC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F577C04-3A20-4C1A-BADE-46A5AB769BC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F577C04-3A20-4C1A-BADE-46A5AB769BC5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,5 +45,6 @@ Global
 		{6A6B67A9-F304-420D-A696-BDDEEB6F6F03} = {DA935485-3EBB-4D67-9238-78A54A243B46}
 		{8061F23F-BE96-4172-A656-0369A48DA052} = {DA935485-3EBB-4D67-9238-78A54A243B46}
 		{9D2DF46F-FBA6-4C85-921B-A3E5D7E9A059} = {DA935485-3EBB-4D67-9238-78A54A243B46}
+		{8F577C04-3A20-4C1A-BADE-46A5AB769BC5} = {80AEB879-99F2-4CD6-9BA7-17A3D782EC97}
 	EndGlobalSection
 EndGlobal
