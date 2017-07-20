@@ -53,7 +53,7 @@ namespace datacleaner
 
                     parts = line.Split(',');
                     var datetime = DateTime.Parse(parts[3]);
-                    line += string.Format("{0},{1},{2},{3},{4}", datetime.Year, datetime.Month, datetime.Day, (int)datetime.DayOfWeek, datetime.DayOfYear);
+                    line += string.Format(",{0},{1},{2},{3},{4}", datetime.Year, datetime.Month, datetime.Day, (int)datetime.DayOfWeek, datetime.DayOfYear);
 
                     #endregion
 
