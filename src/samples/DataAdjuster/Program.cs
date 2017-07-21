@@ -64,7 +64,7 @@ namespace datacleaner
                 //File.WriteAllLines(file, outputLines, Encoding.GetEncoding(1252)); // save in ANSI
 
 
-                File.AppendAllLines(OUTPUT_FILE, outputLines, Encoding.GetEncoding(1252)); // save in ANSI
+                File.AppendAllLines(OUTPUT_FILE, outputLines);
                 Console.WriteLine("Saved");
             }
         }
