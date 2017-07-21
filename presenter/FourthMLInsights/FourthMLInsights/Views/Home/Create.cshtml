@@ -1,0 +1,54 @@
+﻿@model  FourthMLInsights.Models.PredictionViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Fourth Model</h2>
+
+        <div class="jumbotron">
+            <div>
+                Absolute Error: @Model.FourthMeanAbsoluteError
+            </div>
+            <div>
+                Squared Error: @Model.FourthMeanSquaredError
+            </div>
+            <div>
+                Coefficient Of Determination: @Model.FourthCoefficientOfDetermination
+            </div>
+            <h3>Accuracy: @Model.AccuracyFourth %</h3>
+        </div>
+
+    </div>
+    @*<div class="col-md-2">
+            @Html.ActionLink("Recalculate", null, null, new { @class = "btn btn-success" })
+        </div>*@
+    <div class="col-md-6">
+        <h2>Machine Learning Model</h2>
+        <p>
+            <div class="jumbotron">
+                <div>
+                    Absolute Error: @Model.MeanAbsoluteError
+                </div>
+                <div>
+                    Squared Error: @Model.MeanSquaredError
+                </div>
+                <div>
+                    Coefficient Of Determination: @Model.CoefficientOfDetermination
+                </div>
+                <h3>Accuracy: @Model.AccuracyML %</h3>
+            </div>
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        @Html.ActionLink("Recalculate", null, null, new { @class = "btn btn-success" })
+    </div>
+    <div class="col-md-4">
+        @Html.ActionLink("Recalculate", null, null, new { @class = "btn btn-success" })
+    </div>
+</div>

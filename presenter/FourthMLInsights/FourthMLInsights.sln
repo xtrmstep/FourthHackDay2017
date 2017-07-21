@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FourthMLInsights", "FourthMLInsights\FourthMLInsights.csproj", "{90A3291B-4065-4ABD-8526-20293BBCE497}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLFormulas", "MLFormulas\MLFormulas.csproj", "{044FA7EC-0438-44EB-AE68-1A2C1594107F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureService", "AzureService\AzureService.csproj", "{AE3EABDD-ADED-4106-8603-02BA773C2A2A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{90A3291B-4065-4ABD-8526-20293BBCE497}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90A3291B-4065-4ABD-8526-20293BBCE497}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90A3291B-4065-4ABD-8526-20293BBCE497}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90A3291B-4065-4ABD-8526-20293BBCE497}.Release|Any CPU.Build.0 = Release|Any CPU
+		{044FA7EC-0438-44EB-AE68-1A2C1594107F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{044FA7EC-0438-44EB-AE68-1A2C1594107F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{044FA7EC-0438-44EB-AE68-1A2C1594107F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{044FA7EC-0438-44EB-AE68-1A2C1594107F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE3EABDD-ADED-4106-8603-02BA773C2A2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE3EABDD-ADED-4106-8603-02BA773C2A2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE3EABDD-ADED-4106-8603-02BA773C2A2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE3EABDD-ADED-4106-8603-02BA773C2A2A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
