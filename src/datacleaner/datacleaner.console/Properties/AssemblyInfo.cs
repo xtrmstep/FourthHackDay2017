@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DataAdjuster")]
+[assembly: AssemblyTitle("data-cleaner")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DataAdjuster")]
+[assembly: AssemblyProduct("data-cleaner")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("f31b7acf-f26e-4bfc-adda-7b1e569ddb77")]
+[assembly: Guid("835bb9b5-ffb0-4e2e-bd35-35d39931cf7c")]
 
 // Version information for an assembly consists of the following four values:
 //

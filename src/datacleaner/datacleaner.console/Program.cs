@@ -3,7 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 
-namespace datacleaner
+namespace datacleaner.console
 {
     internal class Program
     {
@@ -14,7 +14,7 @@ namespace datacleaner
             const int COLUMN_NUMBER = 7;
             var files = args;
 
-            File.AppendAllLines(OUTPUT_FILE, new[] {COLUMNS}, Encoding.GetEncoding(1252)); // save in ANSI
+            File.AppendAllLines(OUTPUT_FILE, new[] { COLUMNS }, Encoding.GetEncoding(1252)); // save in ANSI
 
             foreach (var file in files)
             {
@@ -31,7 +31,7 @@ namespace datacleaner
 
                 for (var index = 0; index < linesCount; index++)
                 {
-                    Console.Write("\rline {0}/{1} ({2}%)", index, linesCount, Math.Round(index/(float) linesCount*100, 2));
+                    Console.Write("\rline {0}/{1} ({2}%)", index, linesCount, Math.Round(index / (float)linesCount * 100, 2));
 
                     var line = inputLines[index];
 
@@ -59,6 +59,7 @@ namespace datacleaner
 
                     outputLines[index] = line;
                 }
+                Console.WriteLine();
                 Console.WriteLine("Processed");
 
                 //File.WriteAllLines(file, outputLines, Encoding.GetEncoding(1252)); // save in ANSI

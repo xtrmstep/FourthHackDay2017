@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F31B7ACF-F26E-4BFC-ADDA-7B1E569DDB77}</ProjectGuid>
+    <ProjectGuid>{835BB9B5-FFB0-4E2E-BD35-35D39931CF7C}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>datacleaner</RootNamespace>
-    <AssemblyName>datacleaner</AssemblyName>
+    <RootNamespace>datacleaner.console</RootNamespace>
+    <AssemblyName>datacleaner.console</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
