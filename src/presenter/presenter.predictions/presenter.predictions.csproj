@@ -48,8 +48,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CsvReader.cs" />
     <Compile Include="PredictionService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProductDemand.cs" />
     <Compile Include="stats\Maths.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace presenter.predictions
@@ -21,7 +19,7 @@ namespace presenter.predictions
             _key = key;
         }
 
-        public async Task<double[]> GetAmlPredictions(Dictionary<DateTime, Dictionary<string, string>> data)
+        public double[] GetAmlPredictions(Dictionary<DateTime, ProductDemand> data)
         {
             var estimations = new ConcurrentDictionary<DateTime, double>();
             Parallel.ForEach(data, async pair =>
@@ -34,12 +32,12 @@ namespace presenter.predictions
             return estimations.Values.ToArray();
         }
 
-        public Task<double[]> GetMovingAveragePredictions(Dictionary<DateTime, Dictionary<string, string>> data)
+        public double[] GetMovingAveragePredictions(Dictionary<DateTime, ProductDemand> data)
         {
             throw new NotImplementedException();
         }
 
-        private Dictionary<string, string> CreatePayload(DateTime dateTime, Dictionary<string, string> data)
+        private Dictionary<string, string> CreatePayload(DateTime dateTime, ProductDemand data)
         {
             throw new NotImplementedException();
         }
@@ -53,10 +51,10 @@ namespace presenter.predictions
         {
             using (var client = new HttpClient())
             {
-                var payload = new List<Dictionary<string, string>> { data };
+                var payload = new List<Dictionary<string, string>> {data};
                 var scoreRequest = new
                 {
-                    Inputs = new Dictionary<string, List<Dictionary<string, string>>> { { "input1", payload } },
+                    Inputs = new Dictionary<string, List<Dictionary<string, string>>> {{"input1", payload}},
                     GlobalParameters = new Dictionary<string, string>()
                 };
 
