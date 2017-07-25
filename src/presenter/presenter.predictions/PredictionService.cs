@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using presenter.data.types;
 
@@ -40,7 +41,21 @@ namespace presenter.predictions
 
         private Dictionary<string, string> CreatePayload(DateTime dateTime, ProductDemand data)
         {
-            throw new NotImplementedException();
+            return new Dictionary<string, string>()
+            {
+                {"Locationid", data.Locationid.ToString()},
+                {"RecipeName", data.RecipeName},
+                {"Plu", data.Plu.ToString()},
+                {"Salesdate", data.Salesdate.ToString("s")},
+                {"Quantity", data.Quantity.ToString()},
+                {"NetSalesPrice", data.NetSalesPrice.ToString()},
+                {"CostPrice", data.CostPrice.ToString()},
+                {"Year", data.Year.ToString()},
+                {"Month", data.Month.ToString()},
+                {"Day", data.Day.ToString()},
+                {"WeekDay", data.WeekDay.ToString()},
+                {"YearDay", data.YearDay.ToString()}
+            };
         }
 
         private double ExtractEstimatedValue(string response)
