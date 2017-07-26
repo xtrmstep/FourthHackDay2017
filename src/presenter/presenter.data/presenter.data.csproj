@@ -42,6 +42,8 @@
   <ItemGroup>
     <Compile Include="DataSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="types\OutputResults.cs" />
+    <Compile Include="types\MlPredictionResponse.cs" />
     <Compile Include="types\ProductDemand.cs" />
     <Compile Include="types\Recipe.cs" />
   </ItemGroup>

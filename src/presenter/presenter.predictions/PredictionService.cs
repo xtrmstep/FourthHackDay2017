@@ -22,11 +22,13 @@ namespace presenter.predictions
             _key = key;
         }
 
-        public async Task<string> GetAmlPredictions(Tuple<DateTime, ProductDemand>[] data)
+        public async Task<MlPredictionResponse> GetAmlPredictions(Tuple<DateTime, ProductDemand>[] data)
         {
             var payload = data.Select(d => CreatePayload(d.Item1, d.Item2)).ToList();
             var response = await GetPrediction(payload);
-            return string.Empty;
+            var result = JsonConvert.DeserializeObject<MlPredictionResponse>(response);
+
+            return result;
         }
 
         public Dictionary<DateTime, double> GetMovingAveragePredictions(Tuple<DateTime, ProductDemand>[] data)
