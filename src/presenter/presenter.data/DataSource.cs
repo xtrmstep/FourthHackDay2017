@@ -40,10 +40,12 @@ namespace presenter.data
             return result.ToArray();
         }
 
-        public static ProductDemand[] GetSalesHistory()
+        public static ProductDemand[] GetSalesHistory(bool isTest = false)
         {
             var result = new List<ProductDemand>();
-            var textFile = File.OpenText(@"files\\PE-TRG-Mar-2017.csv");
+            var textFile = isTest
+                ? File.OpenText(@"files\\testhistory.csv")
+                : File.OpenText(@"files\\PE-TRG-Mar-2017.csv");
             textFile.ReadLine();
             var line = textFile.ReadLine();
             while (line!= null) {

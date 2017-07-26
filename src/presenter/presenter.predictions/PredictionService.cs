@@ -44,7 +44,7 @@ namespace presenter.predictions
             {
                 {"Locationid", data.Locationid.ToString()},
                 {"RecipeName", data.RecipeName},
-                {"Plu", data.Plu.ToString()},
+                {"PLU", data.Plu.ToString()},
                 {"Salesdate", data.Salesdate.ToString("s")},
                 {"Quantity", data.Quantity.ToString()},
                 {"NetSalesPrice", data.NetSalesPrice.ToString()},
@@ -69,19 +69,17 @@ namespace presenter.predictions
                 var payload = new List<Dictionary<string, string>> {data};
                 var scoreRequest = new
                 {
-                    Inputs = new Dictionary<string, List<Dictionary<string, string>>> {{"input1", payload}},
-                    GlobalParameters = new Dictionary<string, string>()
+                    Inputs = new Dictionary<string, List<Dictionary<string, string>>> { { "input1", payload } },
+                    GlobalParameters = new Dictionary<string, string>() { }
                 };
-
+                
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _key);
                 client.BaseAddress = new Uri(_uri);
 
                 var response = await client.PostAsJsonAsync(string.Empty, scoreRequest);
 
-                if (response.IsSuccessStatusCode)
-                    return await response.Content.ReadAsStringAsync();
-
-                return await response.Content.ReadAsStringAsync();
+                var content = await response.Content.ReadAsStringAsync();
+                return content;
             }
         }
     }
