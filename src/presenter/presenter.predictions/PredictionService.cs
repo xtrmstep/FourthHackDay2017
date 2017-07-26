@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using presenter.data.types;
 
 namespace presenter.predictions
@@ -21,16 +22,11 @@ namespace presenter.predictions
             _key = key;
         }
 
-        public async Task<Dictionary<DateTime, double>> GetAmlPredictions(Tuple<DateTime, ProductDemand>[] data)
+        public async Task<string> GetAmlPredictions(Tuple<DateTime, ProductDemand>[] data)
         {
-            var estimations = new ConcurrentDictionary<DateTime, double>();
-            foreach (var tuple in data) {
-                var payload = CreatePayload(tuple.Item1, tuple.Item2);
-                var response = await GetPrediction(payload);
-                var estimatedValue = ExtractEstimatedValue(response);
-                estimations.TryUpdate(tuple.Item1, estimatedValue, double.NaN);
-            }
-            return estimations.ToDictionary(e => e.Key, e => e.Value);
+            var payload = data.Select(d => CreatePayload(d.Item1, d.Item2)).ToList();
+            var response = await GetPrediction(payload);
+            return string.Empty;
         }
 
         public Dictionary<DateTime, double> GetMovingAveragePredictions(Tuple<DateTime, ProductDemand>[] data)
@@ -59,20 +55,20 @@ namespace presenter.predictions
 
         private double ExtractEstimatedValue(string response)
         {
-            throw new NotImplementedException();
+            var dic = JsonConvert.DeserializeObject(response);
+            return double.NaN;
         }
 
-        private async Task<string> GetPrediction(Dictionary<string, string> data)
+        private async Task<string> GetPrediction(List<Dictionary<string, string>> payload)
         {
             using (var client = new HttpClient())
             {
-                var payload = new List<Dictionary<string, string>> {data};
                 var scoreRequest = new
                 {
                     Inputs = new Dictionary<string, List<Dictionary<string, string>>> { { "input1", payload } },
                     GlobalParameters = new Dictionary<string, string>() { }
                 };
-                
+
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _key);
                 client.BaseAddress = new Uri(_uri);
 
