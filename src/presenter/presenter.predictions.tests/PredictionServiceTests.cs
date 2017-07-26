@@ -30,5 +30,21 @@ namespace presenter.predictions.tests
 
             var actual = predictionService.GetAmlPredictions(singleProductHistory).Result;
         }
+
+        [Fact]
+        public void GeneratePredictions()
+        {
+            var storedDemand = DataSource.GetSalesHistory();
+            var salesForMarch = storedDemand.Where(d => d.Month == 3).ToArray();
+
+            var predictionService = new PredictionService(MlSettings.Endpoint, MlSettings.Key);
+
+            var movingAverages = predictionService.GetMovingAveragePredictions(salesForMarch);
+            var estimations = predictionService.GetAmlPredictions(salesForMarch).Result;
+
+            DataSource.SaveToCsv(salesForMarch, "c:\\logs\\sales_march.csv");
+            DataSource.SaveToCsv(movingAverages, "c:\\logs\\sales_march_moving_average.csv");
+            DataSource.SaveToCsv(estimations, "c:\\logs\\sales_march_ml.csv");
+        }
     }
 }
