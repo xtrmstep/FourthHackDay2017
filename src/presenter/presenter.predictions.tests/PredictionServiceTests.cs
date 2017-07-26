@@ -17,7 +17,7 @@ namespace presenter.predictions.tests
             var storedDemand = DataSource.GetSalesHistory();
             var singleProductHistory = storedDemand.Where(d => d.Plu == 3604);
             var data = singleProductHistory.Select(d => new Tuple<DateTime, ProductDemand>(d.Salesdate, d)).ToArray();
-            var predictionService = new PredictionService(string.Empty, string.Empty);
+            var predictionService = new PredictionService(MlSettings.Key, MlSettings.Endpoint);
 
             var actual = predictionService.GetMovingAveragePredictions(data);
         }
@@ -28,9 +28,9 @@ namespace presenter.predictions.tests
             var storedDemand = DataSource.GetSalesHistory();
             var singleProductHistory = storedDemand.Where(d => d.Plu == 3604);
             var data = singleProductHistory.Select(d => new Tuple<DateTime, ProductDemand>(d.Salesdate, d)).ToArray();
-            var predictionService = new PredictionService(string.Empty, string.Empty);
+            var predictionService = new PredictionService(MlSettings.Key, MlSettings.Endpoint);
 
-            var actual = predictionService.GetAmlPredictions(data);
+            var actual = predictionService.GetAmlPredictions(data).Result;
         }
     }
 }

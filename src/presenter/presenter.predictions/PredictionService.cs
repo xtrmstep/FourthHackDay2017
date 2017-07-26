@@ -21,16 +21,15 @@ namespace presenter.predictions
             _key = key;
         }
 
-        public Dictionary<DateTime, double> GetAmlPredictions(Tuple<DateTime, ProductDemand>[] data)
+        public async Task<Dictionary<DateTime, double>> GetAmlPredictions(Tuple<DateTime, ProductDemand>[] data)
         {
             var estimations = new ConcurrentDictionary<DateTime, double>();
-            Parallel.ForEach(data, async tuple =>
-            {
+            foreach (var tuple in data) {
                 var payload = CreatePayload(tuple.Item1, tuple.Item2);
                 var response = await GetPrediction(payload);
                 var estimatedValue = ExtractEstimatedValue(response);
                 estimations.TryUpdate(tuple.Item1, estimatedValue, double.NaN);
-            });
+            }
             return estimations.ToDictionary(e => e.Key, e => e.Value);
         }
 

@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MlSettings.cs" />
     <Compile Include="PredictionService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="stats\Maths.cs" />
