@@ -68,5 +68,30 @@ namespace presenter.data
             }
             return result.ToArray();
         }
+
+        public static void SaveToCsv(ProductDemand[] sales, string fileName)
+        {
+            using (var f = File.CreateText(fileName))
+            {
+                var counter = 1;
+                f.WriteLine(",Locationid,RecipeName,PLU,Salesdate,Quantity,NetSalesPrice,CostPrice,Year,Month,Day,WeekDay,YearDay");
+                foreach (var sale in sales) {
+                    f.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12}"
+                        , counter++
+                        , sale.Locationid
+                        , sale.RecipeName
+                        , sale.Plu
+                        , sale.Salesdate.ToShortDateString()
+                        , sale.Quantity
+                        , sale.NetSalesPrice
+                        , sale.CostPrice
+                        , sale.Year
+                        , sale.Month
+                        , sale.Day
+                        , sale.WeekDay
+                        , sale.YearDay);
+                }
+            }
+        }
     }
 }

@@ -85,19 +85,27 @@ namespace presenter.predictions
             {
                 var pd = new ProductDemand();
 
-                pd.Quantity = float.Parse(dic["Scored Labels"]);
+                try
+                {
+                    pd.Quantity = float.Parse(dic["Scored Labels"]);
 
-                pd.Locationid = int.Parse(dic["Locationid"]);
-                pd.RecipeName = dic["RecipeName"];
-                pd.Plu = int.Parse(dic["PLU"]);
-                pd.Salesdate = DateTime.Parse(dic["Salesdate"]);
-                pd.NetSalesPrice = float.Parse(dic["NetSalesPrice"]);
-                pd.CostPrice = float.Parse(dic["CostPrice"]);
-                pd.Year = int.Parse(dic["Year"]);
-                pd.Month = int.Parse(dic["Month"]);
-                pd.Day = int.Parse(dic["Day"]);
-                pd.WeekDay = int.Parse(dic["WeekDay"]);
-                pd.YearDay = int.Parse(dic["YearDay"]);
+                    pd.Locationid = int.Parse(dic["Locationid"]);
+                    pd.RecipeName = dic["RecipeName"];
+                    pd.Plu = int.Parse(dic["PLU"]);
+                    pd.Salesdate = dic["Salesdate"].ToDateTime();
+                    pd.NetSalesPrice = float.Parse(dic["NetSalesPrice"]);
+                    pd.CostPrice = float.Parse(dic["CostPrice"]);
+                    pd.Year = int.Parse(dic["Year"]);
+                    pd.Month = int.Parse(dic["Month"]);
+                    pd.Day = int.Parse(dic["Day"]);
+                    pd.WeekDay = int.Parse(dic["WeekDay"]);
+                    pd.YearDay = int.Parse(dic["YearDay"]);
+                }
+                catch (FormatException e)
+                {
+                    var message = JsonConvert.SerializeObject(dic);
+                    throw new FormatException(message, e);
+                }
 
                 result.Add(pd);
             }
