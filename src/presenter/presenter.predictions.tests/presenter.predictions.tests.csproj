@@ -59,13 +59,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PredictionServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="stats\MathsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="testdata\testdata.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\presenter.data\presenter.data.csproj">
+      <Project>{88a990e3-27c2-4d78-9155-fe7876e558ea}</Project>
+      <Name>presenter.data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\presenter.predictions\presenter.predictions.csproj">
       <Project>{dd7c36b6-786c-4c7f-825b-82f225c85ecd}</Project>
       <Name>presenter.predictions</Name>
