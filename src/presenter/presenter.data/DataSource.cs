@@ -40,29 +40,28 @@ namespace presenter.data
             return result.ToArray();
         }
 
-        public static ProductDemand[] GetSalesHistory(bool isTest = false)
+        public static ProductDemand[] GetSalesHistory()
         {
             var result = new List<ProductDemand>();
-            var textFile = isTest
-                ? File.OpenText(@"files\\testhistory.csv")
-                : File.OpenText(@"files\\PE-TRG-Mar-2017.csv");
+            var textFile = File.OpenText(@"files\\sales-jan-mar-2017.csv");
             textFile.ReadLine();
             var line = textFile.ReadLine();
-            while (line!= null) {
+            while (line != null)
+            {
                 var parts = line.Split(',');
                 var pd = new ProductDemand();
-                pd.Locationid = int.Parse(parts[0]);
-                pd.RecipeName = parts[1];
-                pd.Plu = int.Parse(parts[2]);
-                pd.Salesdate = DateTime.Parse(parts[3]);
-                pd.Quantity = float.Parse(parts[4]);
-                pd.NetSalesPrice = float.Parse(parts[5]);
-                pd.CostPrice = float.Parse(parts[6]);
-                pd.Year = int.Parse(parts[7]);
-                pd.Month = int.Parse(parts[8]);
-                pd.Day = int.Parse(parts[9]);
-                pd.WeekDay = int.Parse(parts[10]);
-                pd.YearDay = int.Parse(parts[11]);
+                pd.Locationid = int.Parse(parts[1]);
+                pd.RecipeName = parts[2];
+                pd.Plu = int.Parse(parts[3]);
+                pd.Salesdate = DateTime.Parse(parts[4]);
+                pd.Quantity = float.Parse(parts[5]);
+                pd.NetSalesPrice = float.Parse(parts[6]);
+                pd.CostPrice = float.Parse(parts[7]);
+                pd.Year = int.Parse(parts[8]);
+                pd.Month = int.Parse(parts[9]);
+                pd.Day = int.Parse(parts[10]);
+                pd.WeekDay = int.Parse(parts[11]);
+                pd.YearDay = int.Parse(parts[12]);
                 result.Add(pd);
 
                 line = textFile.ReadLine();

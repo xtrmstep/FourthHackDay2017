@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using presenter.data;
 using presenter.data.types;
 
 namespace presenter.predictions
@@ -31,9 +32,31 @@ namespace presenter.predictions
             return estimations;
         }
 
-        public Dictionary<DateTime, double> GetMovingAveragePredictions(ProductDemand[] data)
+        public ProductDemand[] GetMovingAveragePredictions(ProductDemand[] data)
         {
-            throw new NotImplementedException();
+            var result = new List<ProductDemand>();
+            var salesHistory = DataSource.GetSalesHistory();
+            foreach (var demand in data)
+            {
+                // 4 weeks average
+                var productSales = salesHistory.Where(s =>
+                    s.Plu == demand.Plu
+                    && s.Locationid == demand.Locationid
+                    && s.Salesdate < demand.Salesdate
+                    && s.Salesdate >= demand.Salesdate.AddDays(-4*7)).ToArray();
+
+                var salesAverage = float.NaN;
+                if (productSales.Length > 0)
+                {
+                    salesAverage = productSales
+                        .Select(s => s.Quantity)
+                        .Average();
+                }
+                var estimatedDemand = demand.Clone();
+                estimatedDemand.Quantity = salesAverage;
+                result.Add(estimatedDemand);
+            }
+            return result.ToArray();
         }
 
         private Dictionary<string, string> CreatePayload(ProductDemand productDemand)
@@ -62,7 +85,7 @@ namespace presenter.predictions
             {
                 var pd = new ProductDemand();
 
-                pd.Quantity = (int) Math.Round(float.Parse(dic["Scored Labels"]), 0);
+                pd.Quantity = float.Parse(dic["Scored Labels"]);
 
                 pd.Locationid = int.Parse(dic["Locationid"]);
                 pd.RecipeName = dic["RecipeName"];
