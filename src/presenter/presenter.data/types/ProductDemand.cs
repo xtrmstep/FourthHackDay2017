@@ -16,5 +16,10 @@ namespace presenter.data.types
         public int Day { get; set; }
         public int WeekDay { get; set; }
         public int YearDay { get; set; }
+
+        public ProductDemand Clone()
+        {
+            return (ProductDemand)MemberwiseClone();
+        }
     }
 }

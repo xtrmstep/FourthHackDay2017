@@ -14,8 +14,8 @@ namespace presenter.predictions.tests
         [Fact]
         public void GetMovingAveragePredictions_case1()
         {
-            var storedDemand = DataSource.GetSalesHistory(true);
-            var singleProductHistory = storedDemand.Where(d => d.Plu == 3252).ToArray();
+            var storedDemand = DataSource.GetSalesHistory();
+            var singleProductHistory = storedDemand.Where(d => d.Plu == 2480).Take(10).ToArray();
             var predictionService = new PredictionService(MlSettings.Endpoint, MlSettings.Key);
 
             var actual = predictionService.GetMovingAveragePredictions(singleProductHistory);
@@ -24,8 +24,8 @@ namespace presenter.predictions.tests
         [Fact]
         public void GetAmlPredictions_case1()
         {
-            var storedDemand = DataSource.GetSalesHistory(true);
-            var singleProductHistory = storedDemand.Where(d => d.Plu == 3252).ToArray();
+            var storedDemand = DataSource.GetSalesHistory();
+            var singleProductHistory = storedDemand.Where(d => d.Plu == 2480).Take(10).ToArray();
             var predictionService = new PredictionService(MlSettings.Endpoint, MlSettings.Key);
 
             var actual = predictionService.GetAmlPredictions(singleProductHistory).Result;
