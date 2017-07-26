@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using presenter.data.types;
 
 namespace presenter.predictions
 {
@@ -19,20 +20,20 @@ namespace presenter.predictions
             _key = key;
         }
 
-        public double[] GetAmlPredictions(Dictionary<DateTime, ProductDemand> data)
+        public Dictionary<DateTime, double> GetAmlPredictions(Tuple<DateTime, ProductDemand>[] data)
         {
             var estimations = new ConcurrentDictionary<DateTime, double>();
-            Parallel.ForEach(data, async pair =>
+            Parallel.ForEach(data, async tuple =>
             {
-                var payload = CreatePayload(pair.Key, pair.Value);
+                var payload = CreatePayload(tuple.Item1, tuple.Item2);
                 var response = await GetPrediction(payload);
                 var estimatedValue = ExtractEstimatedValue(response);
-                estimations.TryUpdate(pair.Key, estimatedValue, double.NaN);
+                estimations.TryUpdate(tuple.Item1, estimatedValue, double.NaN);
             });
-            return estimations.Values.ToArray();
+            return estimations.ToDictionary(e => e.Key, e => e.Value);
         }
 
-        public double[] GetMovingAveragePredictions(Dictionary<DateTime, ProductDemand> data)
+        public Dictionary<DateTime, double> GetMovingAveragePredictions(Tuple<DateTime, ProductDemand>[] data)
         {
             throw new NotImplementedException();
         }
