@@ -15,22 +15,20 @@ namespace presenter.predictions.tests
         public void GetMovingAveragePredictions_case1()
         {
             var storedDemand = DataSource.GetSalesHistory(true);
-            var singleProductHistory = storedDemand.Where(d => d.Plu == 3252);
-            var data = singleProductHistory.Select(d => new Tuple<DateTime, ProductDemand>(d.Salesdate, d)).ToArray();
+            var singleProductHistory = storedDemand.Where(d => d.Plu == 3252).ToArray();
             var predictionService = new PredictionService(MlSettings.Endpoint, MlSettings.Key);
 
-            var actual = predictionService.GetMovingAveragePredictions(data);
+            var actual = predictionService.GetMovingAveragePredictions(singleProductHistory);
         }
 
         [Fact]
         public void GetAmlPredictions_case1()
         {
             var storedDemand = DataSource.GetSalesHistory(true);
-            var singleProductHistory = storedDemand.Where(d => d.Plu == 3252);
-            var data = singleProductHistory.Select(d => new Tuple<DateTime, ProductDemand>(d.Salesdate, d)).ToArray();
+            var singleProductHistory = storedDemand.Where(d => d.Plu == 3252).ToArray();
             var predictionService = new PredictionService(MlSettings.Endpoint, MlSettings.Key);
 
-            var actual = predictionService.GetAmlPredictions(data).Result;
+            var actual = predictionService.GetAmlPredictions(singleProductHistory).Result;
         }
     }
 }
