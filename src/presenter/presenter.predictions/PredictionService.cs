@@ -45,12 +45,12 @@ namespace presenter.predictions
                     && s.Salesdate < demand.Salesdate
                     && s.Salesdate >= demand.Salesdate.AddDays(-4*7)).ToArray();
 
-                var salesAverage = float.NaN;
+                var salesAverage = 0f;
                 if (productSales.Length > 0)
                 {
                     salesAverage = productSales
                         .Select(s => s.Quantity)
-                        .Average();
+                        .Sum() / (4*7); // 28 sale days
                 }
                 var estimatedDemand = demand.Clone();
                 estimatedDemand.Quantity = salesAverage;
