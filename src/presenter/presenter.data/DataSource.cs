@@ -93,5 +93,25 @@ namespace presenter.data
                 }
             }
         }
+
+        public static void SaveToCsv2(ProductDemandEstimated[] sales, string fileName)
+        {
+            using (var f = File.CreateText(fileName))
+            {
+                var counter = 1;
+                f.WriteLine(",Locationid,PLU,Quantity,Year,Month,Day");
+                foreach (var sale in sales)
+                {
+                    f.WriteLine("{0},{1},{2},{3},{4},{5},{6}"
+                        , counter++
+                        , sale.Locationid
+                        , sale.Plu
+                        , sale.Quantity
+                        , sale.Year
+                        , sale.Month
+                        , sale.Day);
+                }
+            }
+        }
     }
 }

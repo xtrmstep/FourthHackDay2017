@@ -23,7 +23,7 @@ namespace presenter.predictions
             _key = key;
         }
 
-        public async Task<ProductDemand[]> GetAmlPredictions(ProductDemand[] data)
+        public async Task<ProductDemandEstimated[]> GetAmlPredictions(ProductDemand[] data)
         {
             var payload = data.Select(CreatePayload).ToList();
             var response = await GetPrediction(payload);
@@ -32,9 +32,9 @@ namespace presenter.predictions
             return estimations;
         }
 
-        public ProductDemand[] GetMovingAveragePredictions(ProductDemand[] data)
+        public ProductDemandEstimated[] GetMovingAveragePredictions(ProductDemand[] data)
         {
-            var result = new List<ProductDemand>();
+            var result = new List<ProductDemandEstimated>();
             var salesHistory = DataSource.GetSalesHistory();
             foreach (var demand in data)
             {
@@ -52,8 +52,15 @@ namespace presenter.predictions
                         .Select(s => s.Quantity)
                         .Sum() / (4*7); // 28 sale days
                 }
-                var estimatedDemand = demand.Clone();
-                estimatedDemand.Quantity = salesAverage;
+                var estimatedDemand = new ProductDemandEstimated
+                {
+                    Locationid = demand.Locationid,
+                    Plu = demand.Plu,
+                    Year = demand.Year,
+                    Month = demand.Month,
+                    Day = demand.Day,
+                    Quantity = salesAverage // estimation
+                };
                 result.Add(estimatedDemand);
             }
             return result.ToArray();
@@ -78,28 +85,22 @@ namespace presenter.predictions
             };
         }
 
-        private ProductDemand[] ExtractEstimatedValue(Dictionary<string, string>[] output)
+        private ProductDemandEstimated[] ExtractEstimatedValue(Dictionary<string, string>[] output)
         {
-            var result = new List<ProductDemand>();
+            var result = new List<ProductDemandEstimated>();
             foreach (var dic in output)
             {
-                var pd = new ProductDemand();
+                var pd = new ProductDemandEstimated();
 
                 try
                 {
-                    pd.Quantity = float.Parse(dic["Scored Labels"]);
+                    pd.Quantity = float.Parse(dic[MlSettings.ScoredValueFieldName]);
 
                     pd.Locationid = int.Parse(dic["Locationid"]);
-                    pd.RecipeName = dic["RecipeName"];
                     pd.Plu = int.Parse(dic["PLU"]);
-                    pd.Salesdate = dic["Salesdate"].ToDateTime();
-                    pd.NetSalesPrice = float.Parse(dic["NetSalesPrice"]);
-                    pd.CostPrice = float.Parse(dic["CostPrice"]);
                     pd.Year = int.Parse(dic["Year"]);
                     pd.Month = int.Parse(dic["Month"]);
                     pd.Day = int.Parse(dic["Day"]);
-                    pd.WeekDay = int.Parse(dic["WeekDay"]);
-                    pd.YearDay = int.Parse(dic["YearDay"]);
                 }
                 catch (FormatException e)
                 {

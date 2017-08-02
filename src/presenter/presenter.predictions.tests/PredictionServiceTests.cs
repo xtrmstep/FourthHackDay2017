@@ -42,9 +42,18 @@ namespace presenter.predictions.tests
             var movingAverages = predictionService.GetMovingAveragePredictions(salesForMarch);
             var estimations = predictionService.GetAmlPredictions(salesForMarch).Result;
 
-            DataSource.SaveToCsv(salesForMarch, "c:\\logs\\sales_march.csv");
-            DataSource.SaveToCsv(movingAverages, "c:\\logs\\sales_march_moving_average.csv");
-            DataSource.SaveToCsv(estimations, "c:\\logs\\sales_march_ml.csv");
+            var asEstimatedDemand = salesForMarch.Select(d => new ProductDemandEstimated
+            {
+                Locationid = d.Locationid,
+                Plu = d.Plu,
+                Year = d.Year,
+                Month = d.Month,
+                Day = d.Day,
+                Quantity = d.Quantity
+            }).ToArray();
+            DataSource.SaveToCsv2(asEstimatedDemand, "c:\\logs\\sales_march.csv");
+            DataSource.SaveToCsv2(movingAverages, "c:\\logs\\sales_march_moving_average.csv");
+            DataSource.SaveToCsv2(estimations, "c:\\logs\\sales_march_ml.csv");
         }
     }
 }
