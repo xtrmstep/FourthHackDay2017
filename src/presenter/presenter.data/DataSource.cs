@@ -40,8 +40,12 @@ namespace presenter.data
             return result.ToArray();
         }
 
+        private static ProductDemand[] _salesHistory = null;
+
         public static ProductDemand[] GetSalesHistory()
         {
+            if (_salesHistory != null) return _salesHistory;
+
             var result = new List<ProductDemand>();
             var textFile = File.OpenText(@"files\\sales-jan-mar-2017.csv");
             textFile.ReadLine();
@@ -66,7 +70,14 @@ namespace presenter.data
 
                 line = textFile.ReadLine();
             }
-            return result.ToArray();
+            _salesHistory= result.ToArray();
+            return _salesHistory;
+        }
+
+        public static void ClearSalesHistory()
+        {
+            _salesHistory = null;
+            GC.Collect();
         }
 
         public static void SaveToCsv(ProductDemand[] sales, string fileName)

@@ -23,46 +23,118 @@ namespace presenter.predictions
             _key = key;
         }
 
-        public async Task<ProductDemandEstimated[]> GetAmlPredictions(ProductDemand[] data)
+        public async Task<ProductDemandEstimated[]> GetAmlPredictionsAsync(ProductDemand[] data)
         {
-            var payload = data.Select(CreatePayload).ToList();
-            var response = await GetPrediction(payload);
-            var result = JsonConvert.DeserializeObject<MlPredictionResponse>(response);
-            var estimations = ExtractEstimatedValue(result.Results.Output1);
-            return estimations;
+            var predictions = new List<ProductDemandEstimated>();
+            var groupsByLocPlu = data.GroupBy(d => new Tuple<int, int>(d.Locationid, d.Plu)).ToDictionary(d => d.Key, d => d.ToArray());
+            foreach(var d in groupsByLocPlu)
+            {
+                var payload = d.Value.Select(CreatePayload).ToList();
+                var response = await GetPrediction(payload);
+                var result = JsonConvert.DeserializeObject<MlPredictionResponse>(response);
+                var estimations = ExtractEstimatedValue(result.Results.Output1);
+                predictions.AddRange(estimations);
+            }
+            return predictions.ToArray();
+        }
+
+        public async Task<ProductDemandEstimated[]> GetAmlPredictionsAsync2(ProductDemand[] data)
+        {
+            // split array to chunks
+            var predictions = new List<ProductDemandEstimated>();
+            var chunks = data.Split(10000).ToArray();
+
+            foreach(var chunk in chunks)
+            {
+                var payload = chunk.Select(CreatePayload).ToList();
+                var response = await GetPrediction(payload);
+                var result = JsonConvert.DeserializeObject<MlPredictionResponse>(response);
+                var estimations = ExtractEstimatedValue(result.Results.Output1);
+                predictions.AddRange(estimations);
+            }
+
+            GC.Collect();
+            return predictions.ToArray();
+        }
+
+        public ProductDemandEstimated[] GetAmlPredictions(ProductDemand[] data)
+        {
+            var predictions =new ConcurrentBag<ProductDemandEstimated>();
+            var groupsByLocPlu = data. GroupBy(d => new Tuple<int, int>(d.Locationid, d.Plu)).ToDictionary(d => d.Key, d => d.ToArray());
+            Parallel.ForEach(groupsByLocPlu, async d =>
+            {
+                var payload = d.Value.Select(CreatePayload).ToList();
+                var response = await GetPrediction(payload);
+                var result = JsonConvert.DeserializeObject<MlPredictionResponse>(response);
+                var estimations = ExtractEstimatedValue(result.Results.Output1);
+                foreach (var estimation in estimations)
+                {
+                    predictions.Add(estimation);
+                }
+            });
+            GC.Collect();
+            return predictions.ToArray();
+        }
+
+        public ProductDemandEstimated[] GetAmlPredictions2(ProductDemand[] data)
+        {
+            // split array to chunks
+            var predictions = new ConcurrentBag<ProductDemandEstimated>();
+            var chunks = data.Split(10000).ToArray();
+            Parallel.ForEach(chunks,
+                //new ParallelOptions {MaxDegreeOfParallelism = 4},
+                chunk =>
+                {
+                    var payload = chunk.Select(CreatePayload).ToList();
+                    var response = GetPrediction(payload).Result;
+                    var result = JsonConvert.DeserializeObject<MlPredictionResponse>(response);
+                    var estimations = ExtractEstimatedValue(result.Results.Output1);
+                    foreach (var estimation in estimations) { predictions.Add(estimation); }
+                });
+            return predictions.ToArray();
         }
 
         public ProductDemandEstimated[] GetMovingAveragePredictions(ProductDemand[] data)
         {
-            var result = new List<ProductDemandEstimated>();
+            var result = new ConcurrentBag<ProductDemandEstimated>();
             var salesHistory = DataSource.GetSalesHistory();
-            foreach (var demand in data)
+            var groupsByLocPluInput = data.GroupBy(d => new Tuple<int,int>(d.Locationid, d.Plu)).ToDictionary(d => d.Key, d => d.ToArray());
+            var groupsByLocPluSales = salesHistory.GroupBy(d => new Tuple<int, int>(d.Locationid, d.Plu)).ToDictionary(d => d.Key, d => d.ToArray());
+            Parallel.ForEach(groupsByLocPluInput, demand =>
             {
-                // 4 weeks average
-                var productSales = salesHistory.Where(s =>
-                    s.Plu == demand.Plu
-                    && s.Locationid == demand.Locationid
-                    && s.Salesdate < demand.Salesdate
-                    && s.Salesdate >= demand.Salesdate.AddDays(-4*7)).ToArray();
+                var demandLoc = demand.Key.Item1;
+                var demandPlu = demand.Key.Item2;
+                var sales = groupsByLocPluSales[demand.Key];
 
-                var salesAverage = 0f;
-                if (productSales.Length > 0)
+                foreach (var demandItem in demand.Value)
                 {
-                    salesAverage = productSales
-                        .Select(s => s.Quantity)
-                        .Sum() / (4*7); // 28 sale days
+                    // 4 weeks average
+                    var productSales = sales.Where(s =>
+                        s.Plu == demandPlu
+                        && s.Locationid == demandLoc
+                        && s.Salesdate < demandItem.Salesdate
+                        && s.Salesdate >= demandItem.Salesdate.AddDays(-4*7)).ToArray();
+
+                    var salesAverage = 0f;
+                    if (productSales.Length > 0)
+                    {
+                        salesAverage = productSales
+                            .Select(s => s.Quantity)
+                            .Sum()/(4*7); // 28 sale days
+                    }
+                    var estimatedDemand = new ProductDemandEstimated
+                    {
+                        Locationid = demandLoc,
+                        Plu = demandPlu,
+                        Year = demandItem.Year,
+                        Month = demandItem.Month,
+                        Day = demandItem.Day,
+                        Quantity = salesAverage // estimation
+                    };
+                    result.Add(estimatedDemand);
                 }
-                var estimatedDemand = new ProductDemandEstimated
-                {
-                    Locationid = demand.Locationid,
-                    Plu = demand.Plu,
-                    Year = demand.Year,
-                    Month = demand.Month,
-                    Day = demand.Day,
-                    Quantity = salesAverage // estimation
-                };
-                result.Add(estimatedDemand);
-            }
+            });
+            GC.Collect();
             return result.ToArray();
         }
 
